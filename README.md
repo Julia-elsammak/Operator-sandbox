@@ -68,7 +68,7 @@ The following command deletes all the Kubernetes resources created by the above 
 
 For further details on setting up Operator, including information about using tolerations, refer to the Datadog Operator advanced setup guide:https://docs.datadoghq.com/agent/guide/operator-advanced/
 
-Unprivileged
+### Unprivileged
 (Optional) To run an unprivileged installation, add the following to the Datadog custom resource (CR):
 
 ```
@@ -81,6 +81,6 @@ agent:
 ``` 
 where <USER_ID> is the UID to run the agent and <DOCKER_GROUP_ID> is the group ID owning the Docker or containerd socket.
 
-NOTES:
+### NOTES:
 If you see error `CrashLoopBackOff` - run kubectl kubectl exec -it <agent-pod-name> agent status
 and check if API key is correct!
