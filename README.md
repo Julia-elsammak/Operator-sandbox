@@ -35,7 +35,7 @@ Deploy an Agent with the Operator
 To deploy the Datadog Agent with the operator in the minimum number of steps, see the datadog-operator Helm chart. Here are the steps:
 
 Install the Datadog Operator:
-
+a
 helm repo add datadog https://helm.datadoghq.com
 helm install my-datadog-operator datadog/datadog-operator
 Create a Kubernetes secret with your API and app keys
@@ -46,7 +46,6 @@ Replace <DATADOG_API_KEY> and <DATADOG_APP_KEY> with your Datadog API and applic
 
 Create a file with the spec of your Datadog Agent deployment configuration. The simplest configuration is as follows:
 
-```
 apiVersion: datadoghq.com/v1alpha1
 kind: DatadogAgent
 metadata:
@@ -65,27 +64,30 @@ spec:
   clusterAgent:
     image:
       name: "gcr.io/datadoghq/cluster-agent:latest"
-```
+
 
 Deploy the Datadog Agent with the above configuration file:
 
-kubectl apply -f /path/to/your/datadog-agent.yaml
+`kubectl apply -f /path/to/your/datadog-agent.yaml`
+
 Cleanup
 The following command deletes all the Kubernetes resources created by the above instructions:
 
-kubectl delete datadogagent datadog
-helm delete my-datadog-operator
+`kubectl delete datadogagent datadog`
+`helm delete my-datadog-operator`
+
 For further details on setting up Operator, including information about using tolerations, refer to the Datadog Operator advanced setup guide.
 
 Unprivileged
 (Optional) To run an unprivileged installation, add the following to the Datadog custom resource (CR):
 
-agent:
-  config:
-    securityContext:
-      runAsUser: <USER_ID>
-      supplementalGroups:
-        - <DOCKER_GROUP_ID>
+`agent:`
+  `config:`
+    `securityContext:`
+      `runAsUser: <USER_ID>`
+      `supplementalGroups:`
+        `- <DOCKER_GROUP_ID>`
+
 where <USER_ID> is the UID to run the agent and <DOCKER_GROUP_ID> is the group ID owning the Docker or containerd socket.
 
 Next steps
