@@ -82,5 +82,5 @@ agent:
 where <USER_ID> is the UID to run the agent and <DOCKER_GROUP_ID> is the group ID owning the Docker or containerd socket.
 
 ### NOTES:
-If you see error `CrashLoopBackOff` - `run kubectl exec -it <agent-pod-name> agent status`
+If you see error `CrashLoopBackOff` - run `kubectl exec -it <agent-pod-name> agent status`
 and check if API key is correct!
