@@ -40,11 +40,13 @@ helm repo add datadog https://helm.datadoghq.com
 helm install my-datadog-operator datadog/datadog-operator
 Create a Kubernetes secret with your API and app keys
 
-kubectl create secret generic datadog-secret --from-literal api-key=<DATADOG_API_KEY> --from-literal app-key=<DATADOG_APP_KEY>
+`kubectl create secret generic datadog-secret --from-literal api-key=<DATADOG_API_KEY> --from-literal app-key=<DATADOG_APP_KEY> Replace <DATADOG_API_KEY> and <DATADOG_APP_KEY> with your Datadog API and application keys`
+
 Replace <DATADOG_API_KEY> and <DATADOG_APP_KEY> with your Datadog API and application keys
 
 Create a file with the spec of your Datadog Agent deployment configuration. The simplest configuration is as follows:
 
+```
 apiVersion: datadoghq.com/v1alpha1
 kind: DatadogAgent
 metadata:
@@ -63,6 +65,8 @@ spec:
   clusterAgent:
     image:
       name: "gcr.io/datadoghq/cluster-agent:latest"
+```
+
 Deploy the Datadog Agent with the above configuration file:
 
 kubectl apply -f /path/to/your/datadog-agent.yaml
@@ -94,3 +98,6 @@ To configure integrations, see Integrations & Autodiscovery.
 To set up APM, see Kubernetes Trace Collection.
 
 To set up log collection, see Kubernetes Log Collection.
+
+if you this error `CrashLoopBackOff` - run kubectl kubectl exec -it <agent-pod-name> agent status
+and check if API key is correct!
