@@ -6,12 +6,11 @@ This page provides instructions on installing the Datadog Agent in a Kubernetes 
 
 ### Minimum Agent and Cluster Agent versions
 Some features related to later Kubernetes versions require a minimum Datadog Agent version.
-
-KUBERNETES VERSION	AGENT VERSION	CLUSTER AGENT VERSION	REASON
-1.16.0+	            7.19.0+	      1.9.0+	               Kubelet metrics deprecation
-
-1.21.0+	            7.36.0+	      1.20.0+	               Kubernetes resource deprecation
-
+KUBERNETES VERSION 1.16.0+ | 1.21.0+	
+AGENT VERSION	7.19.0+ | 7.36.0+	
+CLUSTER AGENT VERSION	1.9.0+ \ 1.20.0+
+REASON Kubelet metrics deprecation | Kubernetes resource deprecation
+	            	      	                               	             
 The Datadog Operator is in public beta. If you have any feedback or questions, contact Datadog support.
 The Datadog Operator is a way to deploy the Datadog Agent on Kubernetes and OpenShift. It reports deployment status, health, and errors in its Custom Resource status, and it limits the risk of misconfiguration thanks to higher-level configuration options.
 
