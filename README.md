@@ -9,6 +9,7 @@ Some features related to later Kubernetes versions require a minimum Datadog Age
 
 KUBERNETES VERSION	AGENT VERSION	CLUSTER AGENT VERSION	REASON
 1.16.0+	   7.19.0+	1.9.0+	Kubelet metrics deprecation
+
 1.21.0+	   7.36.0+	1.20.0+	Kubernetes resource deprecation
 
 The Datadog Operator is in public beta. If you have any feedback or questions, contact Datadog support.
@@ -70,13 +71,14 @@ For further details on setting up Operator, including information about using to
 Unprivileged
 (Optional) To run an unprivileged installation, add the following to the Datadog custom resource (CR):
 
+```
 agent:
   config:
     securityContext:
       runAsUser: <USER_ID>
       supplementalGroups:
         - <DOCKER_GROUP_ID>
-
+``` 
 where <USER_ID> is the UID to run the agent and <DOCKER_GROUP_ID> is the group ID owning the Docker or containerd socket.
 
 NOTES:
