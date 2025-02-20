@@ -7,19 +7,16 @@ This page provides instructions on installing the Datadog Agent in a Kubernetes 
 ### Minimum Agent and Cluster Agent versions
 Some features related to later Kubernetes versions require a minimum Datadog Agent version.
 
-- KUBERNETES VERSION 1.16.0+ | 1.21.0+	
-- AGENT VERSION	7.19.0+ | 7.36.0+	
-- CLUSTER AGENT VERSION	1.9.0+ | 1.20.0+
-- REASON Kubelet metrics deprecation | Kubernetes resource deprecation
+- KUBERNETES VERSION 1.16.0+ | 1.21.0+ | 1.22.0+
+- AGENT VERSION	7.19.0+ | 7.36.0+ | 7.37.0
+- CLUSTER AGENT VERSION	1.9.0+ | 1.20.0+ | 7.37.0+
+- https://docs.datadoghq.com/containers/cluster_agent/#minimum-agent-and-cluster-agent-versions
 	            	      	                               	             
-The Datadog Operator is in public beta. If you have any feedback or questions, contact Datadog support.
 The Datadog Operator is a way to deploy the Datadog Agent on Kubernetes and OpenShift. It reports deployment status, health, and errors in its Custom Resource status, and it limits the risk of misconfiguration thanks to higher-level configuration options.
 
 ### Prerequisites
 Using the Datadog Operator requires the following prerequisites:
--Kubernetes Cluster version >= v1.14.X: Tests were done on versions >= 1.14.0. Still, it should work on versions >= v1.11.0. For earlier versions, because of limited CRD support, the Operator may not work as expected.
--Helm for deploying the datadog-operator.
--Kubectl CLI for installing the datadog-agent.
+Requires Helm (https://helm.sh/) and the kubectl CLI (https://kubernetes.io/docs/tasks/tools/#kubectl).
 
 ### Deploy an Agent with the Operator
 To deploy the Datadog Agent with the operator in the minimum number of steps, see the datadog-operator Helm chart. Here are the steps:
@@ -36,26 +33,21 @@ Replace <DATADOG_API_KEY> and <DATADOG_APP_KEY> with your Datadog API and applic
 ### Create a file with the spec of your Datadog Agent deployment configuration. The simplest configuration is as follows:
 
 ``` 
-
-apiVersion: datadoghq.com/v1alpha1
+apiVersion: datadoghq.com/v2alpha1
 kind: DatadogAgent
 metadata:
   name: datadog
 spec:
-  credentials:
-    apiSecret:
-      secretName: datadog-secret
-      keyName: api-key
-    appSecret:
-      secretName: datadog-secret
-      keyName: app-key
-  agent:
-    image:
-      name: "gcr.io/datadoghq/agent:latest"
-  clusterAgent:
-    image:
-      name: "gcr.io/datadoghq/cluster-agent:latest" 
+  global:
+    clusterName: <CLUSTER_NAME>
+    site: <DATADOG_SITE>
+    credentials:
+      apiSecret:
+        secretName: datadog-secret
+        keyName: api-key
 ```
+Replace <CLUSTER_NAME> with a name for your cluster.
+Replace <DATADOG_SITE> with your Datadog site. Your site is datadoghq.com. (Ensure the correct SITE is selected on the right).
 
 Deploy the Datadog Agent with the above configuration file:
 
@@ -68,18 +60,11 @@ The following command deletes all the Kubernetes resources created by the above 
 
 For further details on setting up Operator, including information about using tolerations, refer to the Datadog Operator advanced setup guide:https://docs.datadoghq.com/agent/guide/operator-advanced/
 
-### Unprivileged
-(Optional) To run an unprivileged installation, add the following to the Datadog custom resource (CR):
-
+### Uninstall
 ```
-agent:
-  config:
-    securityContext:
-      runAsUser: <USER_ID>
-      supplementalGroups:
-        - <DOCKER_GROUP_ID>
-``` 
-where <USER_ID> is the UID to run the agent and <DOCKER_GROUP_ID> is the group ID owning the Docker or containerd socket.
+kubectl delete datadogagent datadog
+helm delete datadog-operator
+```
 
 ### NOTES:
 - If you see error `CrashLoopBackOff` - run `kubectl exec -it <agent-pod-name> agent status`
