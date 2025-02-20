@@ -65,11 +65,3 @@ For further details on setting up Operator, including information about using to
 kubectl delete datadogagent datadog
 helm delete datadog-operator
 ```
-
-### NOTES:
-- If you see error `CrashLoopBackOff` - run `kubectl exec -it <agent-pod-name> agent status`
-and check if API key is correct!
-- Kubernetes 1.25 version -> 1.24 version - Minikube version has to match Kubernetes version:
-For ex: You can use two different profiles for this, like "old" (with 1.15) and "new" (with 1.20)
-`minikube start --profile old --kubernetes-version=v1.15.0`
-`minikube start --profile new --kubernetes-version=v1.20.0`
