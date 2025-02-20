@@ -17,6 +17,7 @@ The Datadog Operator is a way to deploy the Datadog Agent on Kubernetes and Open
 ### Prerequisites
 Using the Datadog Operator requires the following prerequisites:
 Requires Helm (https://helm.sh/) and the kubectl CLI (https://kubernetes.io/docs/tasks/tools/#kubectl).
+Minikube
 
 ### Deploy an Agent with the Operator
 To deploy the Datadog Agent with the operator in the minimum number of steps, see the datadog-operator Helm chart. Here are the steps:
